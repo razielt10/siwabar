@@ -1,0 +1,37 @@
+version: "3.2"
+
+services:
+  siwabar-mysql:
+    # We'll use the MySQL 5.7 image as our base image. Less likely to spring unexpected surprises.
+    image: mysql:5.7
+    restart: always
+    container_name: siwabar-mysql
+    healthcheck:
+      test: ["CMD", "curl", "-fk", "tcp://localhost:3306"]
+      interval: 300s
+      timeout: 400s
+      retries: 10
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+    # It is best to bind sockets on Windows.
+    command: --innodb_use_native_aio=0 --socket=/tmp/mysql.sock --bind_address=0.0.0.0
+
+    # We'd like to be able to access our data files on our local filesystem
+    volumes:
+      - ./db:/var/lib/mysql
+
+    # It is recommended to not do this in production as it is wildly insecure
+    environment:
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'siwabar'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'siwabar'
+      MYSQL_DATABASE: 'siwabar'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'siwabar'
+
+networks:
+  app-network:
+    driver: bridge

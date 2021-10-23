@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Siwa Bar</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/1cc22e00f7.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+
+  <body>
+    <div class="container-site">
+      <header>
+        <a href="/" id="logo-mobile">
+          <img class="logo" src="/img/logo2.png" alt="" />
+        </a>
+
+        <label for="menu-check" id="menu-toggle">
+          <i class="fas fa-bars img-menu"></i>
+        </label>
+
+        <nav class="navigation">
+          <input type="checkbox" id="menu-check" />
+          <ul class="izquierdos navigation-ul">
+            <li class="li-logo">
+              <a href="/"><img class="logo" src="/img/logo2.png" alt="" /></a>
+            </li>
+            <li><a href="#">Menu</a></li>
+            <% if (locals.logeado) { %>
+            <li>
+              <a
+                href="javascript:;"
+                onclick="document.getElementById('form-log-out').submit();"
+                >Salir</a
+              >
+            </li>
+            <form
+              action="/logOut"
+              method="POST"
+              id="form-log-out"
+              style="display: none"
+            ></form>
+            <% } else { %>
+            <li>
+              <a href="/login"><i class="fas fa-sign-in-alt"></i>Login</a>
+            </li>
+            <% } %>
+          </ul>
+        </nav>
+      </header>
+    </div>
+  </body>
+</html>
