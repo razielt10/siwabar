@@ -1,0 +1,28 @@
+<%- include('../partials/header'); %>
+    <section class="principal">
+
+        <article class="black-section" id="div-login">
+            <h2>MENÚ</h2>
+
+            <ol>
+                <li>
+                    <a href="/menu-food/new">Agregar</a>
+                    <a href="/menu-food/">Ver Menú</a>
+                </li>
+            </ol>
+
+            <h3>Elementos</h3>
+
+            <div>
+                <% data.forEach(function(menuFood) { %>
+                    <div>
+                        <h5><%= menuFood.name %></h5>
+                    </div>
+                <% }); %>
+                
+            </div>
+
+        </article>
+    </section>
+    </div>
+<%- include('../partials/footer'); %>

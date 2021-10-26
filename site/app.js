@@ -10,6 +10,7 @@ const cors = require("cors");
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const menuFoodRouter = require('./routes/web/menu-food');
 const apiUserRoute = require('./routes/api/user');
 
 const sessionMdw = require('./middlewares/session');
@@ -47,6 +48,7 @@ app.use('/', indexRouter);
 app.use('/', authRouter);
 app.use('/users', usersRouter);
 app.use('/api/user', cors(corsOptions), apiUserRoute);
+app.use('/menu-food', menuFoodRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
