@@ -6,6 +6,7 @@ const authMdw = require('./../../middlewares/auth');
 const controller = require('./../../controllers/menuController');
 
 
-router.get('/', authMdw, controller.index);
+router.get('/', controller.index);
+router.get('/new', controller.newForm);
 
 module.exports = router;

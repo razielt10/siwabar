@@ -1,0 +1,72 @@
+<%- include('../partials/header'); %>
+    <section class="principal">
+
+        <article class="black-section" id="div-login">
+            <h2>Nuevo item de menú</h2>
+
+            <form class="forms form-login" id="form-create" action="" method="POST">
+                <div class="form-group">
+                    <label class="" for="rating">Categoria Padre</label>
+                    <div class="input-group">
+                        <select name="category_id" id="category_id" class="form-control">
+                            <option value="">--Seleccione--</option>
+                            <% for(let category of categories) { 
+                                const subCategories = category.childs; %>
+                              <option value="<%= category.id %>" data-sub="<%= JSON.stringify(subCategories) %>"><%= category.name %></option>
+                            <% } %>
+                        </select>
+                        <div class="invalid-feedback">
+                            <%= errors.category_id ? errors.category_id.msg : ''%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="rating">Categoria Dos</label>
+                    <div class="input-group">
+                        <select name="sub_category_id" id="sub_category_id" class="form-control">
+                            <option value="">--Seleccione--</option>
+                            
+                        </select>
+                        <div class="invalid-feedback">
+                            <%= errors.sub_category_id ? errors.sub_category_id.msg : ''%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="password">Nombre</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="name" placeholder="" name="name">
+                        <div class="invalid-feedback">
+                            <%= errors.name ? errors.name.msg : ''%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="password">Precio</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="price" placeholder="" name="price">
+                        <div class="invalid-feedback">
+                            <%= errors.price ? errors.price.msg : ''%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label class="" for="description">Descripcion</label>
+                    <textarea name="description" id="description" class="form-control"></textarea>
+                </div>
+
+                <div class="separate-buttons">
+                    <button type="submit" class="btn btn-success btn-block">Guardar</button>
+                </div>
+            </form>
+        </article>
+    </section>
+    </div>
+
+<script src="/javascripts/menu/form.js"></script>
+
+<%- include('../partials/footer'); %>

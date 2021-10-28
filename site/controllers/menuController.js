@@ -21,47 +21,51 @@ module.exports = {
             });
     },
 
-    loginPost: (req, res) => {
-        //antes deberia de revisar si está la cookie
-        //deberia de validar datos
-        let validation = validationResult(req)
-            //console.log(validation);
-
-        if (!validation.isEmpty()) {
-            //return res.send(validation.mapped());
-            return res.render('auth/login', { errors: validation.mapped(), body: req.body });
-        }
-
-        //logear al usuario
-        db.User.findOne({ where: { email: req.body.email } })
-            .then(async(user) => {
-                //ahora voy a guardar la cookie de mantenerme logeado
-                if (req.body.mantenerme) {
-                    let expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 90);
-                    res.cookie('_rememberEmail_', req.body.email, { expires: expires });
-                    //aqui si creo la cookie y que expire en 90 dias
-                    await tokenService.generateToken(res, user);
-                }
-
-                loginService.loginUser(req, res, user);
-
-                console.log('me estoy logeando');
-                return res.redirect('/profile');
-            }).catch((error) => {
-                console.error(error);
-                return res.redirect('login');
-            })
-
-    },
-    profile: (req, res) => {
+    
+    newForm: (req, res) => {
         //return res.send(res.locals.user);
-        db.User.findByPk(res.locals.user.id)
-            .then(function(user) {
-                //console.log(user.favorites);
+        db.MenuCategory.findAll({ where: { parent_id: null } }, { include : ['childCategories'] })
+            .then(async function(categories) {
+                for(cat of categories) {
+                    cat.childs = await cat.getChildsCategories()
+                }
                 //const movieFavorites = user.favorites;
-                return res.redirect('/dashboard');
+                return res.render('menu-food/form', { categories, errors: [], body: req.body });
             });
     },
+
+    save: async (req, res) => {
+        //antes deberia de revisar si está la cookie
+        //deberia de validar datos
+        console.log(req.body)
+        let validation = validationResult(req)
+            console.log(validation);
+
+        if (!validation.isEmpty()) {
+            return res.status(400).send({ errors: validation.mapped() });
+        }
+
+        const food = {
+            name: req.body.name,
+            menu_category_id: req.body.sub_category_id,
+            description: req.body.description,
+            price: req.body.price
+        }
+
+        db.MenuFood.create(food)
+            .then(function(foodCreated){
+                //redireccionar a listado de peliculas
+                return res.status(201).send(foodCreated);
+            }).catch(function(error){
+                console.error(error);
+                
+                return res.status(400).send({ errors: error });
+            });
+
+        //return res.status(404).send({ errors: 'no message' })
+
+    },
+
     
     logOut: (req, res) => {
         //esto no deberia de ir, sino el token

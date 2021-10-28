@@ -12,6 +12,7 @@ const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const menuFoodRouter = require('./routes/web/menu-food');
 const apiUserRoute = require('./routes/api/user');
+const apiMenuFoodRoute = require('./routes/api/menu-food');
 
 const sessionMdw = require('./middlewares/session');
 const rememberMdw = require('./middlewares/remember');
@@ -41,6 +42,8 @@ app.use(cookieParser());
 
 app.use(rememberMdw);
 
+app.use(express.static(__dirname + '/../public'));
+
 //use los method put y delete en las rutas y el formulario
 app.use(methodOverride('_method'));
 
@@ -49,6 +52,7 @@ app.use('/', authRouter);
 app.use('/users', usersRouter);
 app.use('/api/user', cors(corsOptions), apiUserRoute);
 app.use('/menu-food', menuFoodRouter);
+app.use('/api/menu-food', cors(corsOptions), apiMenuFoodRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
