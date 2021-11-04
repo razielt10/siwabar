@@ -10,7 +10,11 @@ const { validationResult } = require('express-validator')
 
 module.exports = {
     index: async(req, res) => {
-        db.MenuFood.findAll()
+        db.MenuFood.findAll({
+            order : [
+                ['menu_category_id', 'ASC'], ['order' , 'ASC']
+            ],
+            include : { all : true, nested : true} })
             .then(function(foods) {
                 res.render('menu-food/index', { data: foods, body: {} });
                 return
@@ -24,17 +28,17 @@ module.exports = {
     
     newForm: (req, res) => {
         //return res.send(res.locals.user);
-        db.MenuCategory.findAll({ where: { parent_id: null } }, { include : ['childCategories'] })
-            .then(async function(categories) {
-                for(cat of categories) {
-                    cat.childs = await cat.getChildsCategories()
-                }
-                //const movieFavorites = user.favorites;
-                return res.render('menu-food/form', { categories, errors: [], body: req.body });
+        db.MenuCategory.findAll({ where: { parent_id: null }, include : ['childsCategories'] })
+            .then(function(categories) {
+                return res.render('menu-food/form', { categories, menuFood: null, errors: [], body: req.body });
+            })
+            .catch(function(err) {
+                console.log(err)
+                res.redirect('/manu-food');
             });
     },
 
-    save: async (req, res) => {
+    saveApi: async (req, res) => {
         //antes deberia de revisar si está la cookie
         //deberia de validar datos
         console.log(req.body)
@@ -53,6 +57,53 @@ module.exports = {
         }
 
         db.MenuFood.create(food)
+            .then(function(foodCreated){
+                //redireccionar a listado de peliculas
+                return res.status(201).send(foodCreated);
+            }).catch(function(error){
+                console.error(error);
+                
+                return res.status(400).send({ errors: error });
+            });
+
+        //return res.status(404).send({ errors: 'no message' })
+
+    },
+
+    editForm : (req, res) => {
+        menuCategories = db.MenuCategory.findAll({ where: { parent_id: null }, include : ['childsCategories'] })
+
+        menuFood = db.MenuFood.findByPk(req.params.id, {include : { all : true, nested : true}})
+
+        Promise.all([menuCategories, menuFood])
+            .then(function(values) {
+                return res.render('menu-food/form', { categories : values[0], menuFood : values[1], errors: [], body: req.body });
+            }).catch(function(error){
+                console.error(error);
+                
+                return res.status(400).send({ errors: error });
+            });
+    },
+
+    editApi: async (req, res) => {
+        //antes deberia de revisar si está la cookie
+        //deberia de validar datos
+        console.log(req.body)
+        let validation = validationResult(req)
+            console.log(validation);
+
+        if (!validation.isEmpty()) {
+            return res.status(400).send({ errors: validation.mapped() });
+        }
+
+        let food = await db.MenuFood.findByPk(req.params.id);
+
+        food.name = req.body.name
+        food.menu_category_id = req.body.sub_category_id,
+        food.description = req.body.description,
+        food.price = req.body.price
+
+        food.save()
             .then(function(foodCreated){
                 //redireccionar a listado de peliculas
                 return res.status(201).send(foodCreated);

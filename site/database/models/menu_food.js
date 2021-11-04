@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       name: { type: DataTypes.STRING(50), },
       menu_category_id: { type: DataTypes.INTEGER, },
       description: { type: DataTypes.STRING(300), },
-      price: { type: DataTypes.INTEGER, }
+      price: { type: DataTypes.INTEGER, },
+      order : { type: DataTypes.INTEGER, }
     },
     {
       tableName: "menu_foods",
@@ -19,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     Model.belongsTo(models.MenuCategory, {
       as: "category",
       foreignKey: "menu_category_id",
-      otherKey: "id",
     });
   };
 

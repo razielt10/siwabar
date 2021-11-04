@@ -1,0 +1,23 @@
+.menu-food-container {
+    display: flex;
+    gap: 10px;
+}
+
+.menu-food {
+    border: 1px solid #b9f9fc;
+    border-radius: 5px;
+    background-color: #b9f9fc;
+    padding: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.menu-food div.edit-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.menu-food div.edit-icon:hover {
+    color: blueviolet;
+}

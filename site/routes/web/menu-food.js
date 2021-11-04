@@ -8,5 +8,6 @@ const controller = require('./../../controllers/menuController');
 
 router.get('/', controller.index);
 router.get('/new', controller.newForm);
+router.get('/:id/edit', controller.editForm);
 
 module.exports = router;

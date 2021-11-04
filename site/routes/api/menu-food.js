@@ -11,6 +11,13 @@ router.post('/', [
     check('sub_category_id').isNumeric().withMessage('Debe seleccionar una categoria Dos'),
     check('price').isNumeric().withMessage('El Precio debe ser un numero'),
     //falta validar que no sea una imagen y lanzar el error
-],  controller.save);
+],  controller.saveApi);
+
+router.put('/:id', [
+    check('name').isLength({min:2}).withMessage('El titulo al menos debe tener 2 letras'),
+    check('sub_category_id').isNumeric().withMessage('Debe seleccionar una categoria Dos'),
+    check('price').isNumeric().withMessage('El Precio debe ser un numero'),
+    //falta validar que no sea una imagen y lanzar el error
+],  controller.editApi);
 
 module.exports = router;

@@ -8,10 +8,22 @@
 
             <h3>Elementos</h3>
 
-            <div>
+            <div class="menu-food-container">
                 <% data.forEach(function(menuFood) { %>
-                    <div>
-                        <h5><%= menuFood.name %></h5>
+                    <div class="menu-food">
+                        <div>
+                            <h5><%= menuFood.name %></h5>
+                            <div>
+                                <%= menuFood.category.parentCategory.name %>
+                            </div>
+                            <div>
+                                <%= menuFood.category.name %>
+                            </div>
+                            <div><%= menuFood.price %></div>
+                        </div>
+                        <div class="edit-icon">
+                            <a href="/menu-food/<%= menuFood.id %>/edit"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                        </div>
                     </div>
                 <% }); %>
                 
@@ -19,5 +31,6 @@
 
         </article>
     </section>
+    <link href="/stylesheets/menu-food.css" rel="stylesheet"></style>
     </div>
 <%- include('../partials/footer'); %>

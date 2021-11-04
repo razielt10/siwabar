@@ -2,8 +2,9 @@ window.onload = () => {
 
     const categories = document.querySelector('#category_id')
     const subCategories = document.querySelector('#sub_category_id')
-    categories.onchange = function () {
-        const sel = this.options[this.selectedIndex]
+
+    function showSubCategories(ele, callback = null) {
+        const sel = ele.options[ele.selectedIndex]
 
         for(i in subCategories.options){
             subCategories.options.remove(i)
@@ -24,6 +25,20 @@ window.onload = () => {
                 subCategories.options.add(opt)
             }
         }
+        if (callback) {
+            callback()
+        }
+    }
+
+    categories.onchange = function() {
+        showSubCategories(this)
+    }
+
+    if (categories.getAttribute('data-selected') != '') {
+        categories.value = categories.getAttribute('data-selected')
+        showSubCategories(categories, function() {
+            subCategories.value = subCategories.getAttribute('data-selected')
+        })
     }
 
 
@@ -43,14 +58,21 @@ window.onload = () => {
             ele.classList.remove('is-invalid');
         }
 
-        fetch('/api/menu-food', {
+        let urlSave = '/api/menu-food'
+        let methodSave = 'POST'
+        if (id = formularioLogin.getAttribute('data-id')) {
+            urlSave = `/api/menu-food/${id}?_method=PUT`
+            method = 'POST'
+        }
+
+        fetch(urlSave, {
             body: JSON.stringify({
                 name: nameField.value,
                 sub_category_id: subCategoryIdField.value,
                 description: descriptionField.value,
                 price: priceField.value
             }),
-            method: 'POST',
+            method: methodSave,
             headers: {
                 'Content-Type': 'application/json'
             }

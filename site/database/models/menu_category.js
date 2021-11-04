@@ -17,13 +17,19 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Model.belongsTo(models.MenuCategory, {
       as: "parentCategory",
-      foreignKey: "id",
-      otherKey: "parent_id",
+      foreignKey: "parent_id",
+      otherKey: "id",
     });
 
     Model.hasMany(models.MenuCategory, {
       as: "childsCategories",
       foreignKey: "parent_id",
+      otherKey: "id",
+    });
+
+    Model.hasMany(models.MenuFood, {
+      as: "foods",
+      foreignKey: "menu_category_id",
       otherKey: "id",
     });
   };
