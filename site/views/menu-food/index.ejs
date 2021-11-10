@@ -1,4 +1,16 @@
 <%- include('../partials/header'); %>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+<style>
+    .menu-sub-category-container {
+        padding: 10px;
+        background-color: blue;
+        border: 1px solid black;
+    }
+</style>
     <section class="principal">
 
         <article class="black-section" id="div-login">
@@ -6,24 +18,27 @@
 
 <%-include('sub-menu'); %>
 
-            <h3>Elementos</h3>
-
-            <div class="menu-food-container">
-                <% data.forEach(function(menuFood) { %>
-                    <div class="menu-food">
-                        <div>
-                            <h5><%= menuFood.name %></h5>
-                            <div>
-                                <%= menuFood.category.parentCategory.name %>
+                <% data.forEach(function(category) { %>
+                    <h4><%= category.name %></h4>
+                    <div class="menu-food-container">
+                    <% category.childsCategories.forEach(function(subCategory) { %>
+                        <div class="menu-sub-category-container" >
+                            <h5><%= subCategory.name %></h5>
+                            <div class="menu-sub-category-items" data-id="<%= subCategory.id %>">
+                            <% subCategory.foods.forEach(function(menuFood) { %>
+                            <div class="menu-food" data-id="<%= menuFood.id %>" data-subCategoryId="<%= subCategory.id %>">
+                                <div>
+                                    <h5><%= menuFood.name %></h5>
+                                    <div><%= menuFood.price %></div>
+                                </div>
+                                <div class="edit-icon">
+                                    <a href="/menu-food/<%= menuFood.id %>/edit"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                </div>
                             </div>
-                            <div>
-                                <%= menuFood.category.name %>
+                            <% }); %>
                             </div>
-                            <div><%= menuFood.price %></div>
                         </div>
-                        <div class="edit-icon">
-                            <a href="/menu-food/<%= menuFood.id %>/edit"><i class="fas fa-edit" aria-hidden="true"></i></a>
-                        </div>
+                    <% }); %>
                     </div>
                 <% }); %>
                 
@@ -31,6 +46,75 @@
 
         </article>
     </section>
+
+    <script>
+    function reOrder(ev, el) {
+        console.log('reorder')
+        const fCards = ev.target.children
+        const ids = []
+        let subCategoryIdField = ev.target.dataset.id
+        for (const ele of fCards) {
+            ids.push(ele.dataset.id)
+        }
+
+        const urlSave = '/api/menu-food/reorder'
+        const methodSave = 'POST'
+
+        const data = {
+                sub_category_id: subCategoryIdField,
+                food_ids : ids
+            }
+        console.log(data, urlSave, methodSave)
+        /*fetch(urlSave, {
+            body: JSON.stringify(data),
+            method: methodSave,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(function(res) {
+            console.log(res.status)
+            if (res.status == 201) {
+                return res.json()
+            }
+
+            if (res.status >= 400 && res.status <= 499) {
+                return res.json()
+            }
+        })
+        .then(function(data) { 
+            if (data.hasOwnProperty('errors')) {
+                console.log(data.errors)
+                for (fi in data.errors) {
+                    const field = document.querySelector(`#${fi}`)
+                    field.classList.add('is-invalid');
+                    const showError = field.parentElement.querySelector('div.invalid-feedback');
+                    if (showError) {
+                        showError.innerText = data.errors[fi].msg;
+                    }
+                }
+                return;
+            }
+
+            window.location.href = '/menu-food';
+        })
+        .catch(function(err) { console.log(err) })*/
+    }
+
+    $( function() {
+      const sorte = $( ".menu-sub-category-items" );
+      sorte.sortable({
+            update: function(ev, ui) {
+                reOrder(ev, ui)
+                //console.log(ev)
+            }
+          })
+    } );
+
+    </script>
+
+
+
     <link href="/stylesheets/menu-food.css" rel="stylesheet"></style>
     </div>
 <%- include('../partials/footer'); %>

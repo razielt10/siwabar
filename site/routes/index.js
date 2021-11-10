@@ -5,11 +5,11 @@ const authMdw = require('./../middlewares/auth');
 
 const dController = require('./../controllers/dashboardController');
 
-/* GET home page. 
+//GET home page. 
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('menu-ext/index');
 });
-*/
+
 
 router.get('/dashboard', authMdw, dController.index);
 

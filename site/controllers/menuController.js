@@ -10,13 +10,11 @@ const { validationResult } = require('express-validator')
 
 module.exports = {
     index: async(req, res) => {
-        db.MenuFood.findAll({
-            order : [
-                ['menu_category_id', 'ASC'], ['order' , 'ASC']
-            ],
+        db.MenuCategory.findAll({
+            where: { parent_id: null },
             include : { all : true, nested : true} })
-            .then(function(foods) {
-                res.render('menu-food/index', { data: foods, body: {} });
+            .then(function(data) {
+                res.render('menu-food/index', { data: data, body: {} });
                 return
             })
             .catch(function(err) {
@@ -41,19 +39,30 @@ module.exports = {
     saveApi: async (req, res) => {
         //antes deberia de revisar si está la cookie
         //deberia de validar datos
-        console.log(req.body)
         let validation = validationResult(req)
-            console.log(validation);
 
         if (!validation.isEmpty()) {
             return res.status(400).send({ errors: validation.mapped() });
         }
 
+        lastOrder = 1;
+
+        const lastItem = await db.MenuFood.findOne(
+            { where: {menu_category_id: req.body.sub_category_id}, 
+            order: [['order', 'desc']],
+            limit: 1
+            });
+        if (lastItem != null) {
+            lastOrder = lastItem.order + 1
+        }
+
+
         const food = {
             name: req.body.name,
             menu_category_id: req.body.sub_category_id,
             description: req.body.description,
-            price: req.body.price
+            price: req.body.price,
+            order: lastOrder,
         }
 
         db.MenuFood.create(food)
@@ -71,13 +80,20 @@ module.exports = {
     },
 
     editForm : (req, res) => {
-        menuCategories = db.MenuCategory.findAll({ where: { parent_id: null }, include : ['childsCategories'] })
+        menuCategories = db.MenuCategory.findAll(
+            { where: { parent_id: null }, include : ['childsCategories'] }
+            )
 
-        menuFood = db.MenuFood.findByPk(req.params.id, {include : { all : true, nested : true}})
+        menuFood = db.MenuFood.findByPk(req.params.id, 
+            {include : { all : true, nested : true}}
+            )
 
         Promise.all([menuCategories, menuFood])
             .then(function(values) {
-                return res.render('menu-food/form', { categories : values[0], menuFood : values[1], errors: [], body: req.body });
+                return res.render('menu-food/form', 
+                    { categories : values[0], menuFood : values[1],
+                         errors: [], body: req.body }
+                );
             }).catch(function(error){
                 console.error(error);
                 
@@ -86,11 +102,7 @@ module.exports = {
     },
 
     editApi: async (req, res) => {
-        //antes deberia de revisar si está la cookie
-        //deberia de validar datos
-        console.log(req.body)
         let validation = validationResult(req)
-            console.log(validation);
 
         if (!validation.isEmpty()) {
             return res.status(400).send({ errors: validation.mapped() });
@@ -114,6 +126,29 @@ module.exports = {
             });
 
         //return res.status(404).send({ errors: 'no message' })
+
+    },
+
+    reOrder: async (req, res) => {
+        let validation = validationResult(req)
+
+        if (!validation.isEmpty()) {
+            return res.status(400).send({ errors: validation.mapped() });
+        }
+
+        const autoIncrement = 1
+        const foods = await db.MenuFood.finAll({ 
+            where: { menu_category_id: req.body.sub_category_id }, 
+            order: [['order', 'asc']],
+            });
+
+        for (food of foods) {
+            food.order = autoIncrement
+            await food.save()
+            autoIncrement++
+        }
+
+        return res.status(200).send({ errors: null, message: '' })
 
     },
 
