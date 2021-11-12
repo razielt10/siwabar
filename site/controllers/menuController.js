@@ -12,7 +12,13 @@ module.exports = {
     index: async(req, res) => {
         db.MenuCategory.findAll({
             where: { parent_id: null },
-            include : { all : true, nested : true} })
+            include : [
+                { model: db.MenuCategory, as: 'childsCategories', required: true,
+                 include: [
+                     { model: db.MenuFood, as: 'foods', required:true }
+                 ] },
+            ],
+            order: [['childsCategories', '`id`', 'asc'], ['childsCategories', 'foods', '`order`', 'asc']]})
             .then(function(data) {
                 res.render('menu-food/index', { data: data, body: {} });
                 return
@@ -136,23 +142,20 @@ module.exports = {
             return res.status(400).send({ errors: validation.mapped() });
         }
 
-        const autoIncrement = 1
-        const foods = await db.MenuFood.finAll({ 
-            where: { menu_category_id: req.body.sub_category_id }, 
-            order: [['order', 'asc']],
-            });
-
-        for (food of foods) {
+        let autoIncrement = 1
+        let foot = null
+        console.log(req.body.food_ids)
+        for (foodId of req.body.food_ids) {
+            food = null
+            food = await db.MenuFood.findByPk(foodId);
             food.order = autoIncrement
             await food.save()
             autoIncrement++
         }
-
         return res.status(200).send({ errors: null, message: '' })
-
     },
 
-    
+
     logOut: (req, res) => {
         //esto no deberia de ir, sino el token
         let expires = new Date(Date.now() - 1);

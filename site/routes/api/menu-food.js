@@ -20,4 +20,10 @@ router.put('/:id', [
     //falta validar que no sea una imagen y lanzar el error
 ],  controller.editApi);
 
+router.post('/reorder', [
+    check('food_ids').isArray({min:2}).withMessage('Al menos debe de hacer dos items para reordenar'),
+    check('sub_category_id').isLength({min:1}).withMessage('Falta la Sub Categoria'),
+    //falta validar que no sea una imagen y lanzar el error
+],  controller.reOrder);
+
 module.exports = router;

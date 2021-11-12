@@ -4,19 +4,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
-<style>
-    .menu-sub-category-container {
-        padding: 10px;
-        background-color: blue;
-        border: 1px solid black;
-    }
-</style>
     <section class="principal">
 
         <article class="black-section" id="div-login">
             <h1>MENÚ</h1>
 
 <%-include('sub-menu'); %>
+
+                <div class="message-reorder">* Mueve las tarjetas dentro de la misma categoria para cambiar su orden</div>
 
                 <% data.forEach(function(category) { %>
                     <h4><%= category.name %></h4>
@@ -28,11 +23,13 @@
                             <% subCategory.foods.forEach(function(menuFood) { %>
                             <div class="menu-food" data-id="<%= menuFood.id %>" data-subCategoryId="<%= subCategory.id %>">
                                 <div>
-                                    <h5><%= menuFood.name %></h5>
+                                    <div class="name-icon">
+                                        <h5><%= menuFood.name %></h5>
+                                        <div class="edit-icon">
+                                            <a href="/menu-food/<%= menuFood.id %>/edit"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
                                     <div><%= menuFood.price %></div>
-                                </div>
-                                <div class="edit-icon">
-                                    <a href="/menu-food/<%= menuFood.id %>/edit"><i class="fas fa-edit" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                             <% }); %>
@@ -65,7 +62,7 @@
                 food_ids : ids
             }
         console.log(data, urlSave, methodSave)
-        /*fetch(urlSave, {
+        fetch(urlSave, {
             body: JSON.stringify(data),
             method: methodSave,
             headers: {
@@ -74,7 +71,7 @@
         })
         .then(function(res) {
             console.log(res.status)
-            if (res.status == 201) {
+            if (res.status >= 200 && res.status <= 299) {
                 return res.json()
             }
 
@@ -95,10 +92,8 @@
                 }
                 return;
             }
-
-            window.location.href = '/menu-food';
         })
-        .catch(function(err) { console.log(err) })*/
+        .catch(function(err) { console.log(err) })
     }
 
     $( function() {

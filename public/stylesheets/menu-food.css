@@ -1,25 +1,41 @@
 .menu-food-container {
 }
+
+.menu-sub-category-container {
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+
 .menu-sub-category-items {
     display: flex;
     gap: 10px;
 }
 
 .menu-food {
-    border: 1px solid #b9f9fc;
-    border-radius: 5px;
-    background-color: #b9f9fc;
+    border: 1px solid #e47373;
+    border-radius: 4px;
+    background-color: #e47373;
     padding: 5px;
     cursor: pointer;
     position: relative;
+    min-width: 100px;
+    color: #FFFFFF;
+    text-transform: capitalize;
 }
 
-.menu-food div.edit-icon {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+div.name-icon {
+    display: flex;
+    gap : 10px;
 }
 
 .menu-food div.edit-icon:hover {
     color: blueviolet;
+}
+
+.message-reorder {
+    color: #c55202;
+}
+
+i.fa-edit {
+    color: #ffd0d0;
 }
