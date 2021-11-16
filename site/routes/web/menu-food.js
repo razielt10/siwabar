@@ -5,9 +5,8 @@ const authMdw = require('./../../middlewares/auth');
 
 const controller = require('./../../controllers/menuController');
 
-
-router.get('/', controller.index);
-router.get('/new', controller.newForm);
-router.get('/:id/edit', controller.editForm);
+router.get('/', authMdw, controller.index);
+router.get('/new', authMdw, controller.newForm);
+router.get('/:id/edit', authMdw, controller.editForm);
 
 module.exports = router;

@@ -4,12 +4,10 @@ var router = express.Router();
 const authMdw = require('./../middlewares/auth');
 
 const dController = require('./../controllers/dashboardController');
+const mController = require('./../controllers/menuController');
 
-//GET home page. 
-router.get('/', function(req, res, next) {
-    res.render('menu-ext/index');
-});
-
+//Menu to user
+router.get('/', mController.indexExternal);
 
 router.get('/dashboard', authMdw, dController.index);
 

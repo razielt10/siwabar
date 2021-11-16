@@ -62,7 +62,6 @@ module.exports = {
             lastOrder = lastItem.order + 1
         }
 
-
         const food = {
             name: req.body.name,
             menu_category_id: req.body.sub_category_id,
@@ -144,7 +143,7 @@ module.exports = {
 
         let autoIncrement = 1
         let foot = null
-        console.log(req.body.food_ids)
+
         for (foodId of req.body.food_ids) {
             food = null
             food = await db.MenuFood.findByPk(foodId);
@@ -162,5 +161,27 @@ module.exports = {
         res.cookie('_rememberEmail_', '', { expires: expires });
         //el token lo deberia de manejar este servicio
         loginService.logOutSession(req, res);
-    }
+    },
+
+    indexExternal: async(req, res) => {
+        db.MenuCategory.findAll({
+            where: { parent_id: null },
+            include : [
+                { model: db.MenuCategory, as: 'childsCategories', required: true,
+                 include: [
+                     { model: db.MenuFood, as: 'foods', required:true }
+                 ] },
+            ],
+            order: [['childsCategories', '`id`', 'asc'], ['childsCategories', 'foods', '`order`', 'asc']]})
+            .then(function(data) {
+                res.render('menu-ext/index', { data: data, body: {} });
+                return
+            })
+            .catch(function(err) {
+                console.log(err)
+                res.render('error/maintenance', { data: [], body: {} });
+            });
+    },
+
+
 }

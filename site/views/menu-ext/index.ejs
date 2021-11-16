@@ -95,401 +95,45 @@
     </div>
 
     <div class="ppb_wrapper hasbg withtopbar">
+
+        <% data.forEach(function(category) { %>
         <div class="one" style="padding:50px 0 50px 0;">
             <div class="standard_wrapper">
                 <div class="page_content_wrapper">
                     <div class="inner">
-                        <div style="text-align:center;"><h3 class="ppb_menu_title">Explosión de sabor</h3></div>
+                        <div style="text-align:center;"><h3 class="ppb_menu_title"><%= category.name %></h3></div>
+                        <% category.childsCategories.forEach(function(subCategory) { %>
                         <div class="menu_container">
-                            <h2 class="ppb_title_first">Cocteles de Autor</h2>
+                            <h2 class="ppb_title_first"><%= subCategory.name %></h2>
                             <div class="menu_items">
+                                <% subCategory.foods.forEach(function(menuFood) { %>
                                 <div class="one_half ">
                                     <div id="menu_3197" class="menu_content_classic">
                                         <h5 class="menu_post">
-                                            <span class="menu_title">Fix Latino</span>
+                                            <span class="menu_title"><%= menuFood.name %></span>
                                             <span class="menu_dots"></span>
-                                            <span class="menu_price">$450</span></h5>
-                                        <div class="post_detail menu_excerpt">Bacardi/ Jugo de limón / Almibar / Licor de saúco / Menta / Frutos rojos.</div>
+                                            <span class="menu_price">$<%= menuFood.price %></span></h5>
+                                        <div class="post_detail menu_excerpt"><%= menuFood.description %></div>
                                         <div class="menu_highlight"><i class="fa fa-star"></i></div>
                                     </div>
                                 </div>
-                                <div class="one_half last">
-                                    <div id="menu_3172" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Espejismo</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$500</span></h5>
-                                        <div class="post_detail menu_excerpt">Gin heraclito / Jugo de limón / Almibar / Licor de casis / Menta / Frutos rojos.</div>
-                                    </div>
-                                </div>
-                                <div class="one_half ">
-                                    <div id="menu_3173" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Spritz Porteño</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$500</span></h5>
-                                        <div class="post_detail menu_excerpt">Lunfa rosado de verbena / Licor de sauco / Dash de espumante / Soda / Jengibre.</div>
-                                        <div class="menu_highlight"><i class="fa fa-star"></i></div>
-                                    </div>
-                                </div>
-                                <div class="one_half last">
-                                    <div id="menu_3174" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Poder del Tónico</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$500</span></h5>
-                                        <div class="post_detail menu_excerpt">Gin / Lunfa rosado / Limón / Miel.</div>
-                                    </div>
-                                </div>
-                                <div class="one_half last">
-                                    <div id="menu_3176" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Smash de Piña</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$500</span></h5>
-                                        <div class="post_detail menu_excerpt">Gin heraclito/  Jugo de limón / Almibar de piña.</div>
-                                        <div class="menu_highlight"><i class="fa fa-star"></i></div>
-                                    </div>
-                                </div>
-                                <div class="one_half ">
-                                    <div id="menu_3177" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Negroni Argentino</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$500</span></h5>
-                                        <div class="post_detail menu_excerpt">Gin Heraclito / Lunfa rosso / Vervena bitter (piel de naranja)</div>
-                                    </div>
-                                </div>
-                                <div class="one_half last">
-                                    <div id="menu_3178" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">La cura</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$600</span></h5>
-                                        <div class="post_detail menu_excerpt">Johnnie Walker / Limón / Miel / Jengibre.</div>
-                                        <div class="menu_highlight"><i class="fa fa-star"></i></div>
-                                    </div>
-                                </div>
-                                <div class="one_half ">
-                                    <div id="menu_3177" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">ESPRESSO SIWA</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$450</span></h5>
-                                        <div class="post_detail menu_excerpt">Ron Blanco / Licor de café / Café almibar</div>
-                                        <div class="menu_highlight"><i class="fa fa-star"></i></div>
-                                    </div>
-                                </div>
-                                <div class="one_half ">
-                                    <div id="menu_3175" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Elixir</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$500</span></h5>
-                                        <div class="post_detail menu_excerpt">Mango / Naranja / Maracuya / Ron Blanco / Cereza en almibar</div>
-                                    </div>
-                                </div>
+                                <% }); %>
                             </div>
                         </div>
-                        <div class="menu_container">
-                            <h2 class="ppb_title_first">Tragos Clásicos</h2>
-                            <div class="menu_items">
-                                <div class="one_half ">
-                                    <div id="menu_3197" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Cuba Libre</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$400</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_half last">
-                                    <div id="menu_3172" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Destornillador</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$400</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_half ">
-                                    <div id="menu_3173" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Fernet</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$400</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_half last">
-                                    <div id="menu_3174" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Gin tonic</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$400</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_half last">
-                                    <div id="menu_3174" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Jagger + speed</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$650</span></h5>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="menu_container"> 
-                            <h2 class="ppb_title_first">Cervezas</h2>
-                            <div class="menu_items">
-                                    <div class="one_third ">
-                                        <div id="menu_3197" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Corona</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$350</span></h5>
-                                        </div>
-                                    </div>
-                                    <div class="one_third last">
-                                        <div id="menu_3184" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Stella</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$280</span></h5>
-                                        </div>
-                                    </div>
-                                    <div class="one_third">
-                                        <div id="menu_3184" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Babuina Amber</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$280</span></h5>
-                                        </div>
-                                    </div>
-                                    <div class="one_third ">
-                                        <div id="menu_3183" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Babuina Ipa</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$280</span></h5>
-                                        </div>
-                                    </div>
-                                    <div class="one_third ">
-                                        <div id="menu_3183" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Babuina Pale Ale</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$280</span></h5>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="menu_container">
-                            <h2 class="ppb_title_first">Bebidas sin Alcohol</h2>
-                            <div class="menu_items">
-                                <div class="one_third ">
-                                    <div id="menu_3182" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Gaseosas</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$150</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third ">
-                                    <div id="menu_3183" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Red Bull</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$250</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third">
-                                    <div id="menu_3184" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Speed</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$220</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third last">
-                                    <div id="menu_3182" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Agua</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$150</span></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="menu_container">
-                            <h2 class="ppb_title_first">Medidas</h2>
-                            <div class="menu_items">
-                                <div class="one_third ">
-                                    <div id="menu_3197" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Red Label</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$450</span></h5>
-                                        
-                                    </div>
-                                </div>
-                                <div class="one_third last">
-                                    <div id="menu_3184" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Black Label</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$650</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third">
-                                    <div id="menu_3184" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Glenfiddich</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$1000</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third ">
-                                    <div id="menu_3183" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Jack Daniels</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$900</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third ">
-                                    <div id="menu_3182" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Jim Beam</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$450</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third ">
-                                    <div id="menu_3183" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Tequila José Cuervo</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$450</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third">
-                                    <div id="menu_3184" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Jägermaister</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$500</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_third last">
-                                    <div id="menu_3182" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Baileys</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$450</span></h5>
-                                    </div>
-                                </div>
-                                <div class="one_half last">
-                                    <div id="menu_3178" class="menu_content_classic">
-                                        <h5 class="menu_post">
-                                            <span class="menu_title">Copa de vino</span>
-                                            <span class="menu_dots"></span>
-                                            <span class="menu_price">$350</span></h5>
-                                            <div class="post_detail menu_excerpt">Alamos Malbec / Alamos Sauvignon Blanc. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <% }); %>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+        
+        <% if (category.id == 1) { %>
         <div class="parallax title" data-image="/images/menu-ext/siwabar-comer-img-2021_sep.jpeg" data-width="1348" data-height="899" data-content-height="60">
             <div class="parallax_title">
                 <h2 class="ppb_title"><span class="ppb_title_first" ></span></h2></div>
         </div>
-        <div class="one" style="padding:50px 0 50px 0;">
-                <div class="standard_wrapper">
-                    <div class="page_content_wrapper">
-                        <div class="inner">
-                            <div class="menu_container">
-                               <h3 class="ppb_menu_title">HORA DE COMER</h3>
-                                <h2 class="ppb_title_first">Picadas & Tapas</h2>
-                                <div class="menu_items">
-                                    <div class="one_third ">
-                                        <div id="menu_3197" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">TEQUEÑOS</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$400</span></h5>
-                                            <div class="post_detail menu_excerpt">6 unidades</div>
-                                            <div class="menu_highlight"><i class="fa fa-star"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="one_third last">
-                                        <div id="menu_3184" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Papas fritas</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$350</span></h5>
-                                            <div class="post_detail menu_excerpt">Porción para compartir</div>
-                                        </div>
-                                    </div>
-                                    <div class="one_third">
-                                        <div id="menu_3184" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Papas fritas con cheddar y panceta</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$450</span></h5>
-                                            <div class="post_detail menu_excerpt">Porción para compartir</div>
-                                        </div>
-                                    </div>
-                                    <div class="one_third ">
-                                        <div id="menu_3183" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">CHICKEN WINGS</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$300</span></h5>
-                                            <div class="post_detail menu_excerpt">Alitas de pollo | 6 unidades</div>
-                                        </div>
-                                    </div>
-                                    <div class="one_third ">
-                                        <div id="menu_3182" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">SIWA BOMBS</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$450</span></h5>
-                                            <div class="post_detail menu_excerpt">Bolitas de pollo | 6 unidades</div>
-                                            <div class="menu_highlight"><i class="fa fa-star"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="one_third last">
-                                        <div id="menu_3181" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Lolipops</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$450</span></h5>
-                                            <div class="post_detail menu_excerpt">Chupetines de pollo | 6 Unidades </div>
-                                        </div>
-                                    </div>
-                                    <div class="one_third">
-                                        <div id="menu_3183" class="menu_content_classic">
-                                            <h5 class="menu_post">
-                                                <span class="menu_title">Nachos con cheddar y gucamole</span>
-                                                <span class="menu_dots"></span>
-                                                <span class="menu_price">$450</span></h5>
-                                            <div class="post_detail menu_excerpt">Porción para compartir</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-
-
-
-    
+        <% } %>
+        <% }); %>
+            
         <br class="clear"/>
         <div class="footer_bar_wrapper ">
             <div id="copyright">
