@@ -112,9 +112,12 @@
                                         <h5 class="menu_post">
                                             <span class="menu_title"><%= menuFood.name %></span>
                                             <span class="menu_dots"></span>
-                                            <span class="menu_price">$<%= menuFood.price %></span></h5>
+                                            <span class="menu_price">$<%= menuFood.price %></span>
+                                        </h5>
+                                        <% if (menuFood.description) { %>
                                         <div class="post_detail menu_excerpt"><%= menuFood.description %></div>
                                         <div class="menu_highlight"><i class="fa fa-star"></i></div>
+                                        <% } %>
                                     </div>
                                 </div>
                                 <% }); %>

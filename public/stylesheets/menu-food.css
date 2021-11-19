@@ -9,6 +9,7 @@
 .menu-sub-category-items {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .menu-food {
